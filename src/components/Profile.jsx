@@ -132,17 +132,28 @@ const CarouselCardBase = ({ member, index, totalCards, currentIndex, onClick, on
     const getInitials = (name) => name.split(' ').map(n => n[0]).join('');
     const socialIcons = { linkedin: Linkedin, twitter: Twitter, email: Mail };
 
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const isMobile = windowWidth < 768;
+    const isSmall = windowWidth < 480;
+
     // Calculate position in carousel
     const offset = index - currentIndex;
     const absOffset = Math.abs(offset);
     const isActive = offset === 0;
 
     // 3D transform values
-    const rotateY = offset * 35;
-    const translateZ = isActive ? 0 : -150;
-    const translateX = offset * 260;
+    const rotateY = offset * (isMobile ? 25 : 35);
+    const translateZ = isActive ? 0 : (isMobile ? -100 : -150);
+    const translateX = offset * (isMobile ? (isSmall ? 180 : 220) : 260);
     const scale = isActive ? 1 : 0.85;
-    const opacity = absOffset > 2 ? 0 : 1 - absOffset * 0.25;
+    const opacity = absOffset > (isMobile ? 1 : 2) ? 0 : 1 - absOffset * 0.35;
     const zIndex = totalCards - absOffset;
 
     const handleClick = () => {
@@ -160,9 +171,10 @@ const CarouselCardBase = ({ member, index, totalCards, currentIndex, onClick, on
                 transformStyle: 'preserve-3d',
                 perspective: '1000px',
                 backfaceVisibility: 'hidden',
+                x: '-50%'
             }}
             animate={{
-                x: translateX - 140,
+                x: `calc(-50% + ${translateX}px)`,
                 z: translateZ,
                 rotateY: rotateY,
                 scale: scale,
@@ -170,15 +182,15 @@ const CarouselCardBase = ({ member, index, totalCards, currentIndex, onClick, on
             }}
             transition={{
                 type: "spring",
-                stiffness: 200,
-                damping: 25,
-                mass: 0.8
+                stiffness: 300,
+                damping: 20,
+                mass: 0.4
             }}
             onClick={handleClick}
             whileHover={isActive ? { scale: 1.05, y: -8 } : { scale: 0.9 }}
         >
             <div
-                className={`w-80 rounded-2xl overflow-hidden backdrop-blur-${isActive ? 'xl' : 'md'} transition-all duration-500 will-change-transform ${isDark
+                className={`w-64 sm:w-72 md:w-80 rounded-2xl overflow-hidden backdrop-blur-${isActive ? 'xl' : 'md'} transition-all duration-500 will-change-transform ${isDark
                     ? `bg-slate-900/90 border ${isActive ? 'border-cyan-500/50 shadow-2xl shadow-cyan-500/30' : 'border-slate-700/50 shadow-xl shadow-black/30'}`
                     : `bg-white/90 border ${isActive ? 'border-teal-300 shadow-2xl shadow-teal-500/20' : 'border-gray-200 shadow-xl'}`
                     }`}
@@ -323,8 +335,8 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                     initial={{ opacity: 0, scale: 0.8, y: 50, rotateX: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: 30 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    className={`relative rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden pointer-events-auto backdrop-blur-xl ${isDark
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    className={`relative rounded-3xl w-full max-w-4xl h-[90vh] sm:h-auto sm:max-h-[90vh] overflow-hidden pointer-events-auto backdrop-blur-xl flex flex-col ${isDark
                         ? 'bg-slate-900/95 border border-cyan-500/30 shadow-2xl shadow-cyan-500/20'
                         : 'bg-white/95 border border-teal-200 shadow-2xl'
                         }`}
@@ -353,23 +365,23 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                         <X size={20} />
                     </motion.button>
 
-                    <div className="flex flex-col lg:flex-row h-full max-h-[90vh]">
-                        {/* Left Column */}
-                        <div className={`lg:w-1/3 p-8 flex flex-col items-center text-center border-b lg:border-b-0 lg:border-r ${isDark ? 'bg-slate-800/30 border-slate-700/50' : 'bg-gradient-to-b from-teal-50 to-white border-gray-100'
+                    <div className="flex flex-col lg:flex-row flex-1 overflow-y-auto lg:overflow-hidden touch-pan-y custom-scrollbar">
+                        {/* Left Column (Header on mobile) */}
+                        <div className={`lg:w-1/3 p-4 sm:p-6 lg:p-10 flex flex-col items-center text-center border-b lg:border-b-0 lg:border-r flex-shrink-0 ${isDark ? 'bg-slate-800/30 border-slate-700/50' : 'bg-gradient-to-b from-teal-50 to-white border-gray-100'
                             }`}>
                             {/* Animated Avatar */}
                             <motion.div
-                                className="relative mb-6"
+                                className="relative mb-3 sm:mb-6"
                                 initial={{ scale: 0, rotate: -180 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ type: "spring", delay: 0.2 }}
                             >
                                 <motion.div
-                                    className={`absolute -inset-4 rounded-full border-2 border-dashed ${isDark ? 'border-cyan-500/30' : 'border-teal-300'}`}
+                                    className={`absolute -inset-3 sm:-inset-4 rounded-full border-2 border-dashed ${isDark ? 'border-cyan-500/30' : 'border-teal-300'}`}
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                                 />
-                                <div className={`w-36 h-36 rounded-full p-1 bg-gradient-to-br ${isDark ? 'from-cyan-400 to-teal-500' : 'from-teal-400 to-cyan-500'}`}>
+                                <div className={`w-24 h-24 sm:w-36 sm:h-36 rounded-full p-1 bg-gradient-to-br ${isDark ? 'from-cyan-400 to-teal-500' : 'from-teal-400 to-cyan-500'}`}>
                                     <div className={`w-full h-full rounded-full flex items-center justify-center ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
                                         {member.image ? (
                                             <img src={member.image} alt={member.name} className="w-full h-full object-cover rounded-full" />
@@ -392,7 +404,7 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                             </motion.h2>
 
                             <motion.p
-                                className={`font-medium mb-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}
+                                className={`font-medium mb-1 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.35 }}
@@ -402,7 +414,7 @@ const ProfileModal = ({ member, onClose, isDark }) => {
 
                             {member.tagline && (
                                 <motion.p
-                                    className={`text-sm italic mb-4 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}
+                                    className={`text-xs sm:text-sm italic mb-2 sm:mb-4 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.4 }}
@@ -412,19 +424,19 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                             )}
 
                             <motion.div
-                                className={`flex items-center gap-1.5 text-sm mb-6 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}
+                                className={`flex items-center gap-1.5 text-xs sm:text-sm mb-3 sm:mb-6 ${isDark ? 'text-slate-400' : 'text-gray-500'}`}
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.45 }}
                             >
-                                <MapPin size={14} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
+                                <MapPin size={12} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
                                 <span>{member.location}</span>
                             </motion.div>
 
                             {member.contactEmail && (
                                 <motion.a
                                     href={`mailto:${member.contactEmail}`}
-                                    className={`w-full px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${isDark ? 'bg-cyan-500 hover:bg-cyan-400 text-slate-900' : 'bg-teal-600 hover:bg-teal-700 text-white'
+                                    className={`w-full px-4 py-2 sm:py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${isDark ? 'bg-cyan-500 hover:bg-cyan-400 text-slate-900' : 'bg-teal-600 hover:bg-teal-700 text-white'
                                         }`}
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
@@ -432,13 +444,13 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
-                                    <Mail size={18} />
+                                    <Mail size={16} />
                                     Contact
                                 </motion.a>
                             )}
 
                             <motion.div
-                                className="flex items-center gap-3 mt-6"
+                                className="flex items-center gap-3 mt-4 sm:mt-6"
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.55 }}
@@ -464,39 +476,37 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                             </motion.div>
                         </div>
 
-                        {/* Right Column */}
-                        <div className={`lg:w-2/3 p-8 overflow-y-auto ${isDark ? 'text-slate-300' : ''}`}>
-                            {/* About */}
+                        {/* Right Column (Content on mobile) */}
+                        <div className={`lg:w-2/3 p-5 sm:p-8 lg:p-10 overflow-y-auto custom-scrollbar ${isDark ? 'text-slate-300 bg-slate-900/40' : 'bg-white'}`}>
                             <motion.div
-                                className="mb-8"
+                                className={`mb-8 p-5 sm:p-6 rounded-2xl ${isDark ? 'bg-slate-800/40 border border-slate-700/50' : 'bg-slate-50 border border-slate-100'}`}
                                 initial={{ x: 30, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
                                 transition={{ delay: 0.3 }}
                             >
-                                <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                                    <Users size={18} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
+                                <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>
+                                    <Users size={20} />
                                     About
                                 </h3>
-                                <p className={`leading-relaxed ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>{member.fullBio}</p>
+                                <p className={`leading-relaxed text-sm sm:text-base ${isDark ? 'text-slate-300' : 'text-gray-700'}`}>{member.fullBio}</p>
                             </motion.div>
 
-                            {/* Skills */}
                             {member.skills && member.skills.length > 0 && member.skills[0] !== "To Be Announced" && (
                                 <motion.div
-                                    className="mb-8"
+                                    className={`mb-8 p-5 sm:p-6 rounded-2xl ${isDark ? 'bg-slate-800/40 border border-slate-700/50' : 'bg-slate-50 border border-slate-100'}`}
                                     initial={{ x: 30, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ delay: 0.4 }}
                                 >
-                                    <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                                        <Award size={18} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
+                                    <h3 className={`text-lg font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>
+                                        <Award size={20} />
                                         Skills & Expertise
                                     </h3>
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-wrap gap-2 sm:gap-3">
                                         {member.skills.map((skill, i) => (
                                             <motion.span
                                                 key={i}
-                                                className={`px-3 py-1.5 rounded-full text-sm font-medium ${isDark ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30' : 'bg-teal-50 text-teal-700 border border-teal-200'
+                                                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors ${isDark ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30' : 'bg-white text-teal-700 border border-teal-200'
                                                     }`}
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
@@ -509,46 +519,45 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                                 </motion.div>
                             )}
 
-                            {/* Experience */}
                             {member.experience && member.experience.length > 0 && (
                                 <motion.div
-                                    className="mb-8"
+                                    className={`mb-8 p-5 sm:p-6 rounded-2xl ${isDark ? 'bg-slate-800/40 border border-slate-700/50' : 'bg-slate-50 border border-slate-100'}`}
                                     initial={{ x: 30, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ delay: 0.45 }}
                                 >
-                                    <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                                        <Briefcase size={18} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
+                                    <h3 className={`text-lg font-bold mb-5 flex items-center gap-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>
+                                        <Briefcase size={20} />
                                         Work Experience
                                     </h3>
-                                    <div className="space-y-4">
+                                    <div className="space-y-6">
                                         {member.experience.map((exp, i) => (
-                                            <div key={i} className="mb-4">
-                                                <h4 className={`font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>{exp.role}</h4>
-                                                <p className={`text-sm font-medium mb-1 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>{exp.company}</p>
-                                                <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>{exp.desc}</p>
+                                            <div key={i} className={`relative pl-4 border-l-2 ${isDark ? 'border-cyan-500/20' : 'border-teal-200'}`}>
+                                                <h4 className={`font-bold text-base ${isDark ? 'text-white' : 'text-gray-800'}`}>{exp.role}</h4>
+                                                <p className={`text-sm font-semibold mb-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>{exp.company}</p>
+                                                <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>{exp.desc}</p>
                                             </div>
                                         ))}
                                     </div>
                                 </motion.div>
                             )}
 
-                            {/* Projects */}
                             {member.projects && member.projects.length > 0 && member.projects[0].title !== "Coming Soon" && (
                                 <motion.div
                                     initial={{ x: 30, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
                                     transition={{ delay: 0.5 }}
+                                    className={`p-5 sm:p-6 rounded-2xl ${isDark ? 'bg-slate-800/40 border border-slate-700/50' : 'bg-slate-50 border border-slate-100'}`}
                                 >
-                                    <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-                                        <FolderOpen size={18} className={isDark ? 'text-cyan-500' : 'text-teal-500'} />
+                                    <h3 className={`text-lg font-bold mb-5 flex items-center gap-2 ${isDark ? 'text-cyan-400' : 'text-teal-600'}`}>
+                                        <FolderOpen size={20} />
                                         Key Projects
                                     </h3>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
                                         {member.projects.map((project, i) => (
                                             <motion.div
                                                 key={i}
-                                                className={`flex gap-3 p-4 rounded-xl ${isDark ? 'bg-slate-800/50 border border-slate-700/50' : 'bg-gray-50 border border-gray-100'}`}
+                                                className={`flex gap-4 p-4 rounded-xl transition-colors ${isDark ? 'bg-slate-900/40 border border-slate-700/30' : 'bg-white border border-slate-100 shadow-sm'}`}
                                                 initial={{ y: 20, opacity: 0 }}
                                                 animate={{ y: 0, opacity: 1 }}
                                                 transition={{ delay: 0.6 + i * 0.1 }}
@@ -558,8 +567,8 @@ const ProfileModal = ({ member, onClose, isDark }) => {
                                                     <Briefcase size={18} />
                                                 </div>
                                                 <div>
-                                                    <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-800'}`}>{project.title}</h4>
-                                                    <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>{project.desc}</p>
+                                                    <h4 className={`font-bold text-sm sm:text-base ${isDark ? 'text-white' : 'text-gray-800'}`}>{project.title}</h4>
+                                                    <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-400' : 'text-gray-600'}`}>{project.desc}</p>
                                                 </div>
                                             </motion.div>
                                         ))}
@@ -598,14 +607,14 @@ const Profile = () => {
         setCurrentIndex(idx);
     }, []);
 
-    // Auto-rotate carousel (slower interval)
+    // Auto-rotate carousel
     useEffect(() => {
-        const interval = setInterval(nextCard, 8000);
+        const interval = setInterval(nextCard, 5000);
         return () => clearInterval(interval);
     }, [nextCard]);
 
     return (
-        <div className={`min-h-screen relative transition-colors duration-700 ${isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-cyan-50 via-white to-teal-50'}`}>
+        <div className={`min-h-screen relative overflow-x-hidden transition-colors duration-700 ${isDark ? 'bg-slate-950' : 'bg-gradient-to-br from-cyan-50 via-white to-teal-50'}`}>
             {/* Animated Background */}
             <AnimatedBackground isDark={isDark} />
 
@@ -677,7 +686,18 @@ const Profile = () => {
                 </div>
 
                 {/* Cards Container */}
-                <div className="relative h-[550px] flex items-center justify-center overflow-hidden" style={{ perspective: '1200px' }}>
+                <motion.div
+                    className="relative h-[480px] sm:h-[550px] flex items-center justify-center overflow-visible active:cursor-grabbing select-none"
+                    style={{ perspective: '1200px', touchAction: 'none' }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.1}
+                    onDragEnd={(_, info) => {
+                        const threshold = 30;
+                        if (info.offset.x > threshold) prevCard();
+                        else if (info.offset.x < -threshold) nextCard();
+                    }}
+                >
                     {TEAM_MEMBERS.map((member, index) => (
                         <CarouselCard
                             key={member.id}
@@ -690,7 +710,7 @@ const Profile = () => {
                             onSelect={handleSetIndex}
                         />
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Carousel Dots */}
                 <div className="flex justify-center items-center gap-3 mt-8">
