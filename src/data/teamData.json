@@ -1,0 +1,184 @@
+[
+    {
+        "id": "member-1",
+        "name": "Arya Aditya Yadav",
+        "role": "AI Engineer @ VANCO.ai | DST Research Fellow",
+        "tagline": "Architecting Multi-Agent Systems & Enterprise AI Solutions",
+        "bio": "AI Engineer at VANCO.ai specializing in Multi-Agent Systems and MCP. All India Rank 1 Scholar & Project Associate at DST (Govt. of India). Focused on scalable autonomous computing.",
+        "fullBio": "Currently an AI Engineer at VANCO.ai, I focus on advancing the capabilities of Machine Learning, Deep Learning, and Generative AI. With over two years of experience, I specialize in architecting complex Multi-Agent Systems (MCP) and advanced Agent Orchestration frameworks. Previously, I secured All India Rank 1 in a national initiative, which led to my role as a Project Associate with the Department of Science & Technology (DST), Govt. of India. In that capacity, I led the development of an AI-Driven Career Guidance System, creating algorithms to optimize career trajectories for students across diverse demographics. I am committed to building intelligent systems that solve real-world problems through technical excellence and strategic innovation.",
+        "image": "/Arya Aditya Yadav.jpg",
+        "location": "Gorakhpur, India",
+        "contactEmail": "contact@aryaaditya.com",
+        "skills": [
+            "Multi-Agent Systems (MCP)",
+            "Agent Orchestration",
+            "Generative AI",
+            "Deep Learning",
+            "Reinforcement Learning (DDQN)",
+            "Hybrid Recommendation Systems",
+            "Sales Intelligence & Predictive Analytics",
+            "System Architecture"
+        ],
+        "experience": [
+            {
+                "company": "VANCO.ai",
+                "role": "AI Engineer",
+                "desc": "Developing scalable Multi-Agent Systems and Model Context Protocol (MCP) frameworks to enable complex, autonomous inter-agent collaboration for enterprise applications."
+            },
+            {
+                "company": "Department of Science & Technology (Govt. of India)",
+                "role": "Project Associate (Rank 1 Scholar)",
+                "desc": "Spearheaded a nationally funded AI intervention project to build an intelligent career guidance system optimizing pathways for diverse student demographics across India."
+            }
+        ],
+        "projects": [
+            {
+                "title": "Autonomous Agent Orchestration Platform",
+                "desc": "Architecting next-generation Multi-Agent Systems at VANCO.ai, enabling coordination between specialized AI agents for complex enterprise workflows."
+            },
+            {
+                "title": "AI-Driven Career Guidance System (DST)",
+                "desc": "National-level project leveraging machine learning to deliver personalized career optimization for students, addressing socioeconomic diversity."
+            },
+            {
+                "title": "Strategic Advisory: Sales Intelligence Engine (LAVA)",
+                "desc": "I had a great opportunity to serve as a Strategic Advisor for LAVA (Indian MNC), where I designed and deployed a production-grade recommendation system. I implemented Reinforcement Learning models (DDQN) and Transformer-based SVD algorithms to predict sales trends and optimize product positioning significantly."
+            }
+        ],
+        "socialLinks": {
+            "linkedin": "https://www.linkedin.com/in/arya-aditya-yadav-01a6a1257/",
+            "twitter": "#",
+            "email": "mailto:contact@aryaaditya.com"
+        }
+    },
+    {
+        "id": "member-2",
+        "name": "Shivam Rai",
+        "role": "AI/ML Engineer @ Claw Legaltech | Strategic Consultant",
+        "tagline": "Transforming Industries with Generative AI & Computer Vision",
+        "bio": "AI/ML Engineer at Claw Legaltech with 2+ years of experience. Expert in Generative AI for manufacturing and Computer Vision for civic infrastructure.",
+        "fullBio": "A results-driven AI/ML Engineer currently spearheading technical innovation at Claw Legaltech, serving a diverse portfolio of US-based clients. With over two years of hands-on experience, Shivam specializes in deploying high-impact AI solutions that drive tangible business growth. He has successfully consulted for over 20+ clients, implementing bespoke automation strategies that streamline operations and significantly reduce manual workforce overhead. His expertise spans from revolutionizing traditional textile manufacturing with Generative AI to enhancing public infrastructure safety through automated detection systems, demonstrating a unique ability to solve complex problems across varied sectors.",
+        "image": "/Shivam Rai.jpg",
+        "location": "India",
+        "contactEmail": "contact@shivamr.com",
+        "skills": [
+            "Generative AI",
+            "Large Language Models (LLMs)",
+            "Computer Vision",
+            "PyTorch",
+            "Transformers",
+            "Deep Learning",
+            "Operational Automation"
+        ],
+        "experience": [
+            {
+                "company": "Claw Legaltech",
+                "role": "AI/ML Engineer",
+                "desc": "Leading the development of advanced machine learning solutions for US-based clients, utilizing Transformer architectures and LLMs to automate complex legal workflows."
+            },
+            {
+                "company": "Independent Consultancy",
+                "role": "AI Solutions Architect",
+                "desc": "Advising a portfolio of 20+ clients on digital transformation. Implemented custom AI pipelines that automated core business operations, resulting in optimized workforce allocation and enhanced market visibility."
+            },
+            {
+                "company": "Civic Infrastructure Initiative (Gorakhpur)",
+                "role": "Lead Computer Vision Engineer",
+                "desc": "Collaborating with local administration and NHAI officials to deploy a real-time 'Pothole Detection System'. The pilot program aims to drastically reduce accident rates and manual inspection costs through automated road analysis."
+            }
+        ],
+        "projects": [
+            {
+                "title": "Generative Textile Design Suite",
+                "desc": "Architected a custom Generative AI model for a leading Gujarat-based textile enterprise. The system synthesizes high-fidelity, printable design assets, optimizing the production workflow and catalyzing a 2.5x increase in revenue."
+            },
+            {
+                "title": "Pothole Detection System",
+                "desc": "Developed a Computer Vision model assisting NHAI officials in identifying road anomalies. Currently executing a dry-run pilot with the Gorakhpur administration to automate maintenance alerts and improve public safety."
+            },
+            {
+                "title": "Enterprise Operations Automation",
+                "desc": "Delivered end-to-end automation solutions for 20+ SMEs, integrating custom PyTorch-based models to handle repetitive tasks, thereby reducing operational costs."
+            }
+        ],
+        "socialLinks": {
+            "linkedin": "https://www.linkedin.com/in/shivam-r-a64b84298/",
+            "twitter": "#",
+            "email": "mailto:contact@shivamr.com"
+        }
+    },
+    {
+        "id": "member-3",
+        "name": "Saksham Mishra",
+        "role": "Full Stack & MLOps Engineer",
+        "tagline": "Building Production-Grade Distributed Systems",
+        "bio": "Expert in Microservices Architecture, Kubernetes Deployments, and MLOps pipelines. Contributor to open-source infrastructure projects with real industry impact.",
+        "fullBio": "A highly skilled Full Stack Engineer with deep expertise in microservices architecture and MLOps. Saksham has designed and deployed production-grade distributed systems handling millions of requests, implementing CI/CD pipelines, containerization with Docker and Kubernetes, and automated ML model deployment workflows. His contributions span real industry projects including building scalable API gateways, implementing service mesh architectures, and establishing end-to-end ML pipelines from training to inference at scale. He brings a reliability-first approach to every system he architects.",
+        "image": "/Saksham Mishra.jpg",
+        "location": "India",
+        "contactEmail": "contact@sakshammishra.com",
+        "skills": [
+            "Microservices Architecture",
+            "Kubernetes & Docker",
+            "MLOps & CI/CD",
+            "Full Stack Development",
+            "Cloud Infrastructure (AWS/GCP)",
+            "System Reliability Engineering"
+        ],
+        "projects": [
+            {
+                "title": "Distributed API Gateway",
+                "desc": "Architected a high-availability API gateway handling 10K+ RPS with rate limiting, authentication, and real-time analytics using Kong and Redis."
+            },
+            {
+                "title": "MLOps Pipeline Framework",
+                "desc": "Built an end-to-end ML deployment pipeline with automated training, model versioning (MLflow), containerized inference, and Kubernetes orchestration."
+            },
+            {
+                "title": "Microservices Migration",
+                "desc": "Led the migration of a monolithic application to microservices architecture, implementing service discovery, circuit breakers, and distributed tracing."
+            }
+        ],
+        "socialLinks": {
+            "linkedin": "https://www.linkedin.com/in/s-mishra2402/",
+            "twitter": "#",
+            "email": "mailto:contact@sakshammishra.com"
+        }
+    },
+    {
+        "id": "member-4",
+        "name": "Team Member 4",
+        "role": "Coming Soon",
+        "tagline": "Joining the Team Shortly",
+        "bio": "A talented professional joining our team soon. Stay tuned for their profile reveal!",
+        "fullBio": "More details about this team member will be shared soon. We're excited to introduce them to you!",
+        "image": null,
+        "location": "TBA",
+        "contactEmail": "",
+        "skills": [],
+        "projects": [],
+        "socialLinks": {
+            "linkedin": "#",
+            "twitter": "#",
+            "email": "#"
+        }
+    },
+    {
+        "id": "member-5",
+        "name": "Team Member 5",
+        "role": "Coming Soon",
+        "tagline": "Joining the Team Shortly",
+        "bio": "Another exceptional talent who will be bringing unique perspectives to our mission.",
+        "fullBio": "More details about this team member will be shared soon. We're excited to introduce them to you!",
+        "image": null,
+        "location": "TBA",
+        "contactEmail": "",
+        "skills": [],
+        "projects": [],
+        "socialLinks": {
+            "linkedin": "#",
+            "twitter": "#",
+            "email": "#"
+        }
+    }
+]
